@@ -1,0 +1,6 @@
+export const campaignimage=require("./Campaignimage.png")
+export const copyicon=require("./copy.png")
+export const downarrow=require("./Union.png")
+export const avatar=require("./avatar.png")
+export const instagramicon=require("./instagramicon .png")
+export const tiktokicon=require("./tiktokicon.png")
