@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div className="bg-white h-screen w-screen ">
+    <div className=" flex flex-col   h-screen ">
       <Homepage/>
     </div>
   )
