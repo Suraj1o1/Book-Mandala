@@ -23,7 +23,8 @@ export default function SocialPlatformData() {
        {
         platform:"twitter",
         src:"twittericon"
-       }
+       },
     ]
+ 
   return SocialData
 }
