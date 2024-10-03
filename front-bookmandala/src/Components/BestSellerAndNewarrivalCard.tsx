@@ -24,7 +24,7 @@ export function Information({title,discription}:Dis) {
            <p className=' text-dim-gray font-bold hover:text-blue-900 text-sm'>{discription}</p>
        </div>
             <div>
-            <Link className='text-dim-gray font-bold hover:bg-blue-200 px-2 py-2' href="/">Show All</Link>
+            <Link className='text-dim-gray rounded-lg font-bold hover:bg-blue-200 px-2 py-2' href="/">Show All</Link>
            </div>
    
       
@@ -43,7 +43,9 @@ export default function BestSellerAndNewarrivalCard({img,price,booktitle,author,
     
         
                 <div className=' flex flex-col py-2 gap-3 '>
-                        <img className='rounded-3xl' src={img} alt="" width={190} height={190} />
+                        {/* <img className='rounded-3xl ' src={img} alt="" width="190px" height={"250px"} style={{height:"300px "}} /> */}
+                        <img className='rounded-lg w-52 h-80 ' src={img} alt="" />
+
                         <p className='  text-black font-bold hover:text-blue-900 font-sans text-lg'>{booktitle}</p>
                         <p className=' text-dim-gray font-bold  hover:text-blue-900 text-sm'>by {author}</p>
                         <p className='text-black font-bold'>{price}</p>
@@ -63,6 +65,9 @@ export default function BestSellerAndNewarrivalCard({img,price,booktitle,author,
     </>
   )
 }
+
+
+
 
 
 

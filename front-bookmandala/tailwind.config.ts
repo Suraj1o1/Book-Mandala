@@ -13,6 +13,8 @@ const config: Config = {
         foreground: "var(--foreground)",
         'dim-gray': '#6b6b6b',
         'sky-blue': '#93c7e5',
+        'snow': '#fafafa',
+        'teal': '#1a6489',
       },
     },
   },
