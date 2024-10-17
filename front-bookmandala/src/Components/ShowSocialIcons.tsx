@@ -8,13 +8,14 @@ type Icons = {
   src: string;
   link: string;
   classname:string
+ click:()=>void
 }
 
-export default function ShowSocialIcons({ classname,src, link }: Icons) {
+export default function ShowSocialIcons({ classname,src,click ,link }: Icons) {
   return (
    
       <Link href={link}>
-        <img className={classname}  src={src} alt="Social Icon" width={30} height={30} />
+        <img className={classname} onClick={click}  src={src} alt="Social Icon" width={26} height={20} />
       </Link>
     
   );

@@ -5,7 +5,6 @@ import ShowSocialIcons from "@/Components/ShowSocialIcons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CarouselData from "@/Utils/CarouselData";
 import GenreAndTestomonialSection from "@/Components/GenreAndTestomonialSection";
 import GenreandTestomonialApi from "@/Utils/GenreandTestomonialApi";
 import GernreData from "@/Utils/GernreData";
@@ -15,11 +14,18 @@ import BestSellerAndNewarrivalSection, {
 import BestSellerData, { Bestsales, BestSellingAuthors, NepaliBooks } from "@/Utils/BestSellerData";
 import Buttons from "@/Components/Buttons";
 import UsedBooks from "@/Utils/UsedBooks";
+import Footer from "@/Components/Footer";
+import { useColorMode } from "@/ContextApi/ColourContext";
 
 export default function Homepage() {
   
-  const [genredata, setGenreData] = useState(GenreandTestomonialApi);
+  const [genredata, setGenreData] = useState(GenreandTestomonialApi)
   const genre = GernreData();
+
+  // for Light mode and darkmode
+  // const { isDarkMode, toggleColorMode } = useColorMode();
+  const { islightmode, toggleColorMode } = useColorMode();
+ 
   
   const bestsellers=BestSellingAuthors()
   // for nepali book 
@@ -64,6 +70,7 @@ export default function Homepage() {
 
   var settings1 = {
     dots: false,
+    arrows: false,
     infinite: false,
     speed: 500,
     slidesToShow: 6,
@@ -111,6 +118,7 @@ export default function Homepage() {
     dots: false,
     infinite: true,
     speed: 700,
+    arrows:false,
     slidesToShow: 5,
 
     autoplay: true,
@@ -206,23 +214,25 @@ export default function Homepage() {
   return (
     <>
       {/* Navbar */}
-      <div className="flex bg-white justify-evenly flex-wrap  flex-row  py-2 items-center ">
-        <div className="flex items-center gap-4 justify-center ">
+      <div className={islightmode ? "bg-white text-black w-full h-full"  : "bg-black text-white"} >
+      <div className={islightmode?"flex  bg-white justify-evenly flex-wrap  flex-row  py-2 items-center  ":"bg-black flex justify-evenly flex-wrap  flex-row  py-2 items-center  "}>
+        <div className={islightmode?"flex items-center gap-4 justify-center ":"flex items-center gap-4 justify-center text-white "}>
           <Link
-            className="font-bold text-black italic text-2xl"
+            className="font-bold  italic text-2xl"
             href="https://www.youtube.com"
+            
           >
             BooksMandala
           </Link>
           <div className="flex gap-4 justify-between items-center">
-            <p className="font-sans text-dim-gray hover:text-blue-900 text-lg">
+            <p className="font-inter text-dim-gray hover:text-blue-900 text-lg">
               Books
             </p>
             <img src="./images/dropdown.png" alt="" width={30} />
           </div>
           <Link
             href={"/"}
-            className="font-sans text-dim-gray text-lg hover:text-blue-900"
+            className="font-inter text-dim-gray text-lg hover:text-blue-900"
           >
             Deals
           </Link>
@@ -275,18 +285,20 @@ export default function Homepage() {
         </div>
         <div className="flex  mr-5 px-2   gap-4 items-center">
           <ShowSocialIcons
-            src="./images/darkmode.png"
+            src={islightmode?"./images/darkmode.png":"./images/Lightmode.png"}
             link={""}
-            classname={""}
+            classname={"bg-white"}
+            click={toggleColorMode}
           />
           <ShowSocialIcons
             src="./images/shopping-cart.png"
             link={""}
-            classname={""}
+            click={() => {}}
+            classname={"bg-white rounded-lg"}
           />
           <Link
             href={"/"}
-            className="font-sans text-lg text-dim-gray hover:text-blue-600"
+            className="font-inter text-lg text-dim-gray hover:text-blue-600"
           >
             Login
           </Link>
@@ -295,11 +307,13 @@ export default function Homepage() {
           </p>
         </div>
       </div>
+   
+    
 
       {/* body part */}
 
-      <div className="bg-white flex flex-col grow px-1 ">
-        <div className=" bg-white  flex itmes-center flex-col mx-4 my-6  px-1 py-1">
+      <div className={islightmode ? "bg-white flex flex-col grow px-1 " : "bg-black flex flex-col grow px-1 text-dim-gray "}>
+        <div className={islightmode ? " bg-white  flex itmes-center flex-col mx-4 my-6  px-1 py-1" : " bg-black  flex itmes-center flex-col mx-4 my-6  px-1 py-1"}>
           <Slider {...settings}>
             <div className="px-4">
               <img className="rounded-lg" src="./images/belly.jpg" alt="" />
@@ -337,10 +351,10 @@ export default function Homepage() {
         <div className=" flex flex-col">
           <div className="flex flex-row items-center mx-9 justify-between ">
             <div className="flex flex-col gap-2 ">
-              <p className="font-sans text-black font-bold hover:text-blue-900 text-2xl">
+              <p className={islightmode ? "font-inter font-bold text-black text-2xl" : "font-inter font-bold text-white text-2xl"}>
                 {genredata.Genre}
               </p>
-              <p className="font-sans text-dim-gray font-bold hover:text-blue-900 text-sm ">
+              <p className="font-inter text-dim-gray font-bold hover:text-blue-900 text-sm ">
                 {genredata.Genrediscription}
               </p>
             </div>
@@ -349,6 +363,7 @@ export default function Homepage() {
               <img
                 src="./Gifs/forward.gif"
                 alt=""
+                className="rounded-full"
                 onClick={next}
                 width={50}
                 height={50}
@@ -356,6 +371,7 @@ export default function Homepage() {
               <img
                 src="./Gifs/backward.gif"
                 alt=""
+                className="rounded-full"
                 onClick={previous}
                 width={50}
                 height={50}
@@ -380,16 +396,17 @@ export default function Homepage() {
             </div>
           </div>
         </div>
+        
 
         {/* Best Seller Section */}
 
-        <div className=" flex flex-col gap-2  ">
+        <div className="  flex flex-col gap-2  ">
           <Information
             title={sellerandnewarrivalData.Information.Title1}
             discription={sellerandnewarrivalData.Information.Discription1}
           />
 
-          <div className="flex justify-evenly flex-wrap ">
+          <div className="lg:flex lg:justify-evenly lg:gap-0 flex-wrap md:flex md:justify-normal md:gap-5   ">
             {BestSellerInformation.map((items) => (
               <BestSellerAndNewarrivalSection
                 img={items.img}
@@ -400,6 +417,7 @@ export default function Homepage() {
             ))}
           </div>
         </div>
+        
 
         {/* UsedBook section */}
 
@@ -412,13 +430,13 @@ export default function Homepage() {
                     <div className='flex flex-row  justify-start gap-6  '>
                       <img src="./images/bookmarks.png" alt="" width={60} height={60} />
                       <div className='flex justify-evenly flex-col'>
-                        <p className='font-sans text-black font-bold hover:text-blue-900 text-2xl'>Used  books starting at just </p>
-                        <p className='font-sans text-black font-bold hover:text-blue-900 text-2xl'>Rs 250</p>
+                        <p className='font-inter text-black font-bold hover:text-blue-900 text-2xl'>Used  books starting at just </p>
+                        <p className='font-inter text-black font-bold hover:text-blue-900 text-2xl'>Rs 250</p>
                   </div>
                     </div>
                     
                     
-                  <div><p className='font-sans text-gray-600  hover:text-blue-900 text-lg'>Explore a Wide Range of Popular Used Books in Excellent Condition.</p></div>
+                  <div><p className='font-inter text-gray-600  hover:text-blue-900 text-lg'>Explore a Wide Range of Popular Used Books in Excellent Condition.</p></div>
 
                   </div>
                 
@@ -445,28 +463,29 @@ export default function Homepage() {
 
         {/* UsedBook section */}
 
-        <div className="flex gap-5 justify-center bg-snow flex-wrap">
+        <div className={islightmode?"flex gap-5 justify-center  bg-snow flex-wrap":"flex gap-5 justify-center  bg-black flex-wrap"}>
           <div className=" flex flex-col  justify-center my-10 py-5  gap-10">
             <div className="flex flex-col gap-4">
-              <div className="flex flex-row  justify-start gap-6  ">
+              <div className="flex flex-row  justify-start gap-6   ">
                 <img
                   src="./images/bookmarks.png"
+                  className={islightmode?"":"bg-white"}
                   alt=""
                   width={60}
                   height={60}
                 />
                 <div className="flex justify-evenly flex-col">
-                  <p className="font-sans text-black font-bold hover:text-blue-900 text-2xl">
+                  <p className={islightmode?" text-black font-bold font-title text-2xl":"text-snow font-bold font-title text-2xl"}>
                     Used books starting at just{" "}
                   </p>
-                  <p className="font-sans text-black font-bold hover:text-blue-900 text-2xl">
+                  <p className={islightmode?" text-black font-bold font-title text-2xl":"text-snow font-bold font-title text-2xl"}>
                     Rs 250
                   </p>
                 </div>
               </div>
 
               <div>
-                <p className="font-sans text-gray-600  hover:text-blue-900 text-lg">
+                <p className="font-inter text-gray-600  hover:text-blue-900 text-lg">
                   Explore a Wide Range of Popular Used Books in Excellent
                   Condition.
                 </p>
@@ -479,7 +498,7 @@ export default function Homepage() {
               onclick={() => {}}
             ></Buttons>
           </div>
-          <div className=" gap-5 flex my-10 py-10">
+          <div className=" gap-5 flex my-10 py-10 flex-wrap ">
             {usedbooks.map((items) => (
               <img
                 className="rounded-lg"
@@ -500,7 +519,7 @@ export default function Homepage() {
             discription={sellerandnewarrivalData.Information.Discription2}
           />
 
-          <div className="flex justify-evenly flex-wrap ">
+          <div className="lg:flex lg:justify-evenly lg:gap-0 flex-wrap md:flex md:justify-normal md:gap-5 ">
             {newarrivaldata.Newarrival.map((items) => (
               <BestSellerAndNewarrivalSection
                 img={items.img}
@@ -541,17 +560,18 @@ export default function Homepage() {
 
                     {/* for nepali book section */}
 
-   <div className=" flex flex-col  bg-snow my-5 gap-5 relative  ">
+   <div className={islightmode?" flex flex-col  bg-snow my-5 gap-5 relative ":"flex flex-col  bg-black my-5 gap-5 relative "} >
                 <div className="gap-5 flex flex-col justify-center items-center">
-                  <p className="font-sans mt-10 text-black  hover:text-blue-900 text-2xl">Explore form our Amazing collection of </p>
-                  <h1 className="font-sans text-black  hover:text-blue-900 text-5xl">Thousands of Nepali Books</h1>
+                  <p className={islightmode?" text-black font-bold font-title text-2xl":"text-snow font-bold font-title text-2xl"}>Explore form our Amazing collection of </p>
+                  <h1 className={islightmode?" text-black font-bold font-title text-4xl":"text-dim-gray font-bold font-title text-4xl"}>Thousands of Nepali Books</h1>
                 </div>
 
                 <div className="  left-0 bottom-2/4 absolute">
 
                 <img
-                className=""
+                className="rounded-full"
                 src="./Gifs/forward.gif"
+
                 alt=""
                 onClick={next1}
                 width={42}
@@ -563,6 +583,7 @@ export default function Homepage() {
                 <img
                 src="./Gifs/backward.gif"
                 alt=""
+                className="rounded-full"
                 onClick={previous1}
                 width={42}
                 height={40}
@@ -628,26 +649,26 @@ export default function Homepage() {
 
 
                       {/* for Login and Register section */}
-      <div className="bg-no-repeat px-5 bg-cover w-full h-96 grow flex bg-[url('/Nepalibooks/background.svg')] justify-evenly items-center flex-wrap my-5">
-        {/* <img src="./Nepalibooks/background.svg" alt="" /> */}
+      <div className="bg-no-repeat  bg-cover w-full h-96  grow flex bg-[url('/Nepalibooks/background.svg')] justify-evenly items-center flex-wrap  my-5">
+       
         <div className=" flex flex-col gap-5 ml-6   md:mt-10   ">
                   <div className=" flex flex-col gap-2 ">
                   <h1 className="text-black font-bold hover:text-blue-900 text-2xl">Our Picks for you</h1>
-                  <p className="text-black font-sans text-lg ">We will curate special book recommendations for you</p>
-                  <p className="text-black font-sans text-lg ">based on your genre preferences.</p>
+                  <p className="text-black font-inter text-lg ">We will curate special book recommendations for you</p>
+                  <p className="text-black font-inter text-lg ">based on your genre preferences.</p>
                   </div>
 
                   <div className=" flex flex-col gap-5">
-                      <p className="text-black font-sans text-lg ">Login or create account to get started.</p>
+                      <p className="text-black font-inter text-lg ">Login or create account to get started.</p>
                        <Buttons title="LOGIN | REGISTER"
               classname="  hover:bg-blue-600 hover:text-white dark:border-gray-400 border rounded-md border-gray-300 bg-teal text-white font-bold w-2/3  py-2 "
               onclick={() => {}}/>
                   </div>
                   
         </div>
-        <div className=" flex justify-center  md:justify-end ">
-                  <img className="lg:w-1/2 sm:w-2/4 " src="./images/background.webp" alt="" />
-        </div>
+        <div className=" flex justify-center  ">
+                  <img className="sm:w-2/4  md-w-2/4" src="./images/background.webp" alt="" />
+        </div>/
       </div>
 
 
@@ -655,16 +676,16 @@ export default function Homepage() {
 
       <div className=" flex flex-col gap-4  mt-20">
          <div className=" flex flex-col mx-10 gap-3">
-                  <p className="font-sans mt-10 text-black  hover:text-blue-900 text-3xl">{sellerandnewarrivalData.Information.Title3}</p>
-                  <p className="font-sans text-gray-600  hover:text-blue-900 text-lg">{sellerandnewarrivalData.Information.Discription3}</p>
+                  <p className={islightmode?"font-inter mt-10 text-black  hover:text-blue-900 text-3xl ":"font-inter mt-10 text-snow  hover:text-blue-900 text-3xl"}>{sellerandnewarrivalData.Information.Title3}</p>
+                  <p className="font-inter text-gray-600  hover:text-blue-900 text-sm">{sellerandnewarrivalData.Information.Discription3}</p>
         </div>
-        <div className="flex justify-between gap-2 mx-10 text-center flex-wrap items-center">
+        <div className="flex mx-10 justify-between  text-center  flex-wrap items-center ">
         {bestsellers.map((items) => (
                       <>
                       {/* <GenreAndTestomonialSection img={items.img} profile={items.authorname}/> */}
                       <div className="flex flex-col py-2   items-center gap-2">
-                            <img className="w-20 h-20 rounded-full" src={items.img} alt="" />
-                            <Link href="/"><h1 className="font-sans text-black  hover:text-blue-900 text-lg">{items.authorname}</h1></Link>  
+                            <img className="w-20 h-20 rounded-xl" src={items.img} alt="" />
+                            <Link href="/"><h1 className={islightmode?"font-inter text-black  hover:text-blue-900 text-md":"font-inter text-snow  hover:text-blue-900 text-md"}>{items.authorname}</h1></Link>  
                       </div>
                       
                       </>
@@ -674,7 +695,63 @@ export default function Homepage() {
         
       </div>
 
-  </div>       
+                              {/* Preorder-section */}
+
+        <div className={islightmode?"bg-snow flex gap-3 flex-col justify-evenly py-5 my-10":"bg-black flex gap-3 flex-col justify-evenly py-5 my-10"}>
+          <div className=" mt-11 mx-8">          
+            <Information title={sellerandnewarrivalData.Information.Title4} discription={sellerandnewarrivalData.Information.Discription4}/>
+          </div>
+          <div className="flex grow mx-12 mb-12 gap-3 flex-wrap">
+            <img src={sellerandnewarrivalData.Information.Preorderimg} alt="" width={250}/>
+            <div className=" flex flex-col   justify-between">
+              <div className="flex flex-col gap-10  ">
+                <div className="flex flex-col">
+                <p className={islightmode?"font-inter text-black  hover:text-blue-900 text-2xl ":"font-inter text-snow  hover:text-blue-900 text-2xl"}>{sellerandnewarrivalData.Information.preordertitle}</p>
+                <p className="text-sm text-dim-gray font-inter">by: {sellerandnewarrivalData.Information.author}</p>
+                </div>
+              
+                <div className="flex flex-col gap-3" >
+                  <div className="flex gap-2">
+                  <p className={islightmode?"text-black font-bold font-inter":"text-snow font-bold font-inter"}>Rs: {sellerandnewarrivalData.Information.price}</p>
+                  <p className="text-xl  font-bold font-inter text-dim-gray line-through">{sellerandnewarrivalData.Information.originalprice}</p>
+                  </div>
+                 
+                 <p className="text-md font-bold font-inter text-green-400">{sellerandnewarrivalData.Information.discount}</p>
+                </div>
+              </div>
+              
+                
+                <div className="flex justify-between flex-col gap -2">
+                <p className="font-inter text-red-600 text-lg font-bold">PREORDER ENDS IN</p>
+                  <div className="flex  gap-2 mb-3">
+                  <img src="./Gifs/time.gif" alt="" width={28} height={15} />
+                  <p className="text-dim-gray font-inter text-lg">{sellerandnewarrivalData.Information.endtime}</p>
+                  </div>
+                  <Buttons
+                    title="PREORDER"
+                    classname="bg-blue-whote font-inter font-bold hover:bg-blue-600 hover:text-white dark:border-gray-400 border rounded-md border-gray-300 hover:bg-blue- text-blue-600  w-40 py-2 px-4 "
+                     onclick={() => {}}
+                  ></Buttons>
+                 
+                
+                <p></p>
+                </div>
+              
+             
+            </div>
+          </div>
+        </div>
+                              
+                {/* Foooter section */}
+           
+            <Footer/>
+           
+                
+
+  </div> 
+  </div>
+  
+        
           
        
 
