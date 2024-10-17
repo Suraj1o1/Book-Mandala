@@ -8,8 +8,20 @@ export default function BestSellerData() {
         Title1:"Best Seller",
         Title2:"New Arrivals",
         Discription2:"Discover Our New Releases.",
-        Title3:"Best Selling Aurthors",
+        Title3:"Bestselling Aurthors",
         Discription3:"Discover Books by Bestselling Authors in Our Collection, Ranked by Popularity.",
+
+                        // for preorder section
+
+        Title4:"Open Pre-orders",
+        Discription4:"Featured Pre-Orders at BooksMandala: Secure Your Copy of the Latest Upcoming Books Today and Be the First to Embark on a New Literary Journey.",
+        Preorderimg:"./Authors/sadguru.webp",
+        preordertitle:"Enlightenment A New Beginning",
+        author:"Sadguru",
+        originalprice:"400",
+        price:"360",
+        discount:"10% OFF",
+        endtime:"58d : 1h : 44m (Limited)",
 
     }
 

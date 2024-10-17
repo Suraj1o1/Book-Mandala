@@ -1,10 +1,16 @@
+"use client";
+import { ColorModeProvider } from '@/ContextApi/ColourContext'
 import Homepage from '@/Pages/Homepage'
 import React from 'react'
 
-export default function page() {
+export default function page({  }: any) {
   return (
     <div className=" flex flex-col   h-screen ">
-      <Homepage/>
+      <ColorModeProvider> 
+           
+
+      <Homepage />
+      </ColorModeProvider>
     </div>
   )
 }
